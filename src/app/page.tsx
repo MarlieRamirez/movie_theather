@@ -1,11 +1,10 @@
 
 'use client'
-import { redirect } from "next/navigation";
 import styles from "./page.module.css";
 import { Box, Button, Card, CardContent, CardMedia, Divider, Grid2, ListItem, MenuItem, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { getFuture } from "../../network/lib/cinema";
-import dateFormat from 'dateformat';
+import dateFormat from "dateformat";
 
 const user = {
   name: 'Marlie',
