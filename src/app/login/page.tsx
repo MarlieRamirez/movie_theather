@@ -1,17 +1,33 @@
+'use client'
 import Row from 'react-bootstrap/Row';
 import { Button, Container, TextField, Typography } from '@mui/material';
 import Link from 'next/link';
-
-const user = {
-  name: 'Marlie',
-  role: 'admin'
-}
-
+import { getUser, login } from '../../../network/lib/user';
+import { redirect } from 'next/navigation';
 
 export default function Home() {
+  const bLogin = () => {
+    login('admin', '123').then(async response => {
+      const token = response.data.accessToken;
+
+      if (response.status == 404) {
+        console.log('404')
+      } else {
+        localStorage.setItem('token', token)
+
+        getUser(token).then((res) => {
+          localStorage.setItem('user', JSON.stringify(res.data))
+        })
+        redirect('/')
+      }
+
+    })
+  }
+
+
   return (
     <>
-      <Container  maxWidth='xs' className='my-5 pt-4 bg-secondary-subtle border-light rounded-4 container-sm '>
+      <Container maxWidth='xs' className='my-5 pt-4 bg-secondary-subtle border-light rounded-4 container-sm '>
         <Typography className='text-center text-black ' variant='h4'>Login</Typography>
 
 
@@ -26,9 +42,8 @@ export default function Home() {
             </div>
 
             <div className='w-100 mx-auto mb-4'>
-              <Button className='w-100' variant='contained' color='secondary'>Log in</Button>
+              <Button className='w-100' variant='contained' color='secondary' onClick={bLogin}>Log in</Button>
             </div>
-
             <div className='w-100 mx-auto mb-4'>
               <Typography className='text-black'>No tienes una cuenta?
                 <Link href='/sign-in' className='text-primary'> <u>Registrate</u></Link>

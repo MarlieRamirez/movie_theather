@@ -4,8 +4,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AppBar, Button, IconButton, Toolbar, Typography } from "@mui/material";
 import { MovieCreationTwoTone } from "@mui/icons-material";
-import { useRouter } from "next/navigation";
+
 import Link from 'next/link';
+import Head from 'next/head';
 
 
 const geistSans = Geist({
@@ -18,14 +19,16 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const user = null;
+
+const storage = localStorage.getItem('user') ? localStorage.getItem('user') : null
+const user = storage ? JSON.parse(storage) : {}
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const router = useRouter();
+
   var button;
 
   if (user) {
@@ -35,7 +38,9 @@ export default function RootLayout({
   } else {
     button = (<>
       <div>
-        <Button color="inherit" onClick={() => router.push('/login')}>Login</Button>
+        <Link href='/login'>
+          <Button color="inherit">Login</Button>
+        </Link>
       </div>
       <div>
         <Link href='/sign-in'>
@@ -48,20 +53,25 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+      <Head>
+        <title>My page title</title>
+      </Head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <AppBar position="static">
           <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-              onClick={() => router.push('/')}
-            >
-              <MovieCreationTwoTone />
+            <Link href='/'>
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                sx={{ mr: 2 }}
+              >
+                <MovieCreationTwoTone />
 
-            </IconButton>
+              </IconButton>
+            </Link>
+
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Cinemas
             </Typography>

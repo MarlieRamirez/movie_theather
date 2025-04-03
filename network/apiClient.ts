@@ -1,15 +1,16 @@
 import axios from 'axios';
 
-const axiosClient = axios.create({
+const axiosClient = (token?:string) => axios.create({
     baseURL: 'http://localhost:3001/',
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        "Access-Control-Allow-Origin": "*"
+        "Access-Control-Allow-Origin": "*",
+        'Authorization' : 'Bearer '+token 
     },
 });
 
-axiosClient.interceptors.response.use(
+axiosClient().interceptors.response.use(
     function (response) {
         return response
     },
