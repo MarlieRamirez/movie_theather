@@ -40,3 +40,8 @@ a {
     color-scheme: dark;
   }
 }
+
+.divider{
+  border: solid;
+  border-color: #ffffff;
+}
