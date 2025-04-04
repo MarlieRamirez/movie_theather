@@ -5,26 +5,30 @@ import Link from 'next/link';
 import { getUser, login } from '../../../network/lib/user';
 import { redirect, RedirectType } from 'next/navigation';
 import { useLocalStorage } from 'usehooks-ts';
+import { useState } from 'react';
 
 export default function Home() {
+  const [user_name, setUserName] = useState("");
+  const [pwd, setPwd] = useState("");
+
   const [value, setValue, removeValue] = useLocalStorage('user', '')
   const [token, setToken, removeToken] = useLocalStorage('token', '')
 
   const bLogin = () => {
-    login('admin', '123').then(async response => {
+    login(user_name, pwd).then(async response => {
       const token_tmp = response.data.accessToken;
 
-      if (response.status == 404) {
-        console.log('404')
-      } else {
-        setToken(token_tmp)
+      setToken(token_tmp)
 
-        getUser(token_tmp).then((res) => {
-          setValue(JSON.stringify(res.data))
-        })
-        redirect('/')
+      getUser(token_tmp).then((res) => {
+        setValue(JSON.stringify(res.data))
+      }).finally(()=>{
+        redirect('/',RedirectType.replace)
+      })
+    }).catch((error) => {
+      if (error.status == 404) {
+        console.log('ERROR: Not found')
       }
-
     })
   }
 
@@ -38,11 +42,11 @@ export default function Home() {
         <Row >
           <form className='w-100 pt-3 mx-auto '>
             <div className='w-100 mx-auto my-4'>
-              <TextField className='w-100' id="user" label="Usuario" variant="outlined" />
+              <TextField onChange={(e) => setUserName(e.target.value)} className='w-100' id="user" label="Usuario" variant="outlined" />
             </div>
 
             <div className='w-100 mx-auto mb-4'>
-              <TextField className='w-100' id="Contraseña" type='password' label="Contraseña" variant="outlined" />
+              <TextField onChange={(e) => setPwd(e.target.value)} className='w-100' id="Contraseña" type='password' label="Contraseña" variant="outlined" />
             </div>
 
             <div className='w-100 mx-auto mb-4'>

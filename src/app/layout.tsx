@@ -9,6 +9,7 @@ import Link from 'next/link';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
+import { redirect } from 'next/navigation';
 
 
 const geistSans = Geist({
@@ -64,6 +65,7 @@ export default function RootLayout({
   const logout = () => {
     removeValue();
     removeToken()
+    redirect('/')
   }
 
   return (

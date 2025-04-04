@@ -4,13 +4,14 @@ import React, { useEffect, useState } from 'react'
 import { getAvailability, getCinema } from '../../../network/lib/cinema';
 import { ChairRounded } from '@mui/icons-material';
 import { Button, IconButton } from '@mui/material';
+import { useLocalStorage } from 'usehooks-ts';
 
 function capacity() {
   //var chr = String.fromCharCode(65 + n);
   const searchParams = useSearchParams();
   const cinemaID = searchParams.get('cinema');
   const id = searchParams.get('id');
-  const user = localStorage.getItem('user')
+  const [user, setUser, removeUser] = useLocalStorage('user', '')
 
   const [cinema, setCinema] = useState({
     rows: 0,
@@ -87,7 +88,7 @@ function capacity() {
       columns.push(
         <div key={'container' + i + c}>
 
-          <Button onClick={() => { handleSaved(i, c) }} sx={index != -1 ? { 'pointer-events': 'none' } : {}} key={name} variant='contained' color={color} aria-disabled={index != -1} className='rounded-circle py-3'>
+          <Button  onClick={() => { handleSaved(i, c) }} sx={index != -1 ? { 'pointer-events': 'none' } : {}} key={name} variant='contained' color={color} aria-disabled={index != -1} className='rounded-circle py-3'>
             <ChairRounded key={'icon' + i + '' + c} sx={{ width: '5pc', height: '5pc' }} />
           </Button>
 
@@ -112,7 +113,10 @@ export default function page() {
   return (
     <div className='m-4 p-4'>
       {capacity()}
-
+      <div className='d-flex flex-row justify-content-center'>
+      <Button variant='contained' color='secondary' className='w-50 py-2'>Comprar</Button>
+      </div>
+      
     </div>
   )
 }
