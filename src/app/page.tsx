@@ -89,7 +89,7 @@ export default function Home() {
           <DialogActions>
             {
               schedule.map((element) => (
-                <Link key={element.id} href={'/reservation?id='+element.id} >
+                <Link key={element.id} href={{pathname: '/reservation',query:{id: element.id, cinema:element.id_cinema}}} >
                   <Button className="w-100" variant="contained" color="secondary">{dateFormat(element.date, 'dd/mm/yyyy')}</Button>
                 </Link>
               ))

@@ -3,20 +3,24 @@ import Row from 'react-bootstrap/Row';
 import { Button, Container, TextField, Typography } from '@mui/material';
 import Link from 'next/link';
 import { getUser, login } from '../../../network/lib/user';
-import { redirect } from 'next/navigation';
+import { redirect, RedirectType } from 'next/navigation';
+import { useLocalStorage } from 'usehooks-ts';
 
 export default function Home() {
+  const [value, setValue, removeValue] = useLocalStorage('user', '')
+  const [token, setToken, removeToken] = useLocalStorage('token', '')
+
   const bLogin = () => {
     login('admin', '123').then(async response => {
-      const token = response.data.accessToken;
+      const token_tmp = response.data.accessToken;
 
       if (response.status == 404) {
         console.log('404')
       } else {
-        localStorage.setItem('token', token)
+        setToken(token_tmp)
 
-        getUser(token).then((res) => {
-          localStorage.setItem('user', JSON.stringify(res.data))
+        getUser(token_tmp).then((res) => {
+          setValue(JSON.stringify(res.data))
         })
         redirect('/')
       }

@@ -7,6 +7,8 @@ import { MovieCreationTwoTone } from "@mui/icons-material";
 
 import Link from 'next/link';
 import Head from 'next/head';
+import { useEffect, useState } from 'react';
+import { useLocalStorage } from 'usehooks-ts';
 
 
 const geistSans = Geist({
@@ -19,36 +21,49 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-
-const storage = localStorage.getItem('user') ? localStorage.getItem('user') : null
-const user = storage ? JSON.parse(storage) : {}
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
 
-  var button;
+  const [menu, setMenu] = useState(<></>)
+  const [user, setUser] = useState({})
+  
+  const [value, setValue, removeValue] = useLocalStorage('user', '')
+  const [token, settoken, removeToken] = useLocalStorage('token', '')
 
-  if (user) {
-    button = (<>
-      <Button color="inherit" >Logout</Button>
-    </>)
-  } else {
-    button = (<>
-      <div>
-        <Link href='/login'>
-          <Button color="inherit">Login</Button>
-        </Link>
-      </div>
-      <div>
-        <Link href='/sign-in'>
-          <Button color="inherit">Nueva Cuenta</Button>
-        </Link>
-      </div>
+  useEffect(() => {
+    console.log('cambio')
 
-    </>)
+    if (value !== '') {
+      setMenu(
+        <>
+          <Button color="inherit" onClick={logout}>Logout</Button>
+        </>
+      )
+    } else {
+      setMenu(
+        <>
+          <div>
+            <Link href='/login'>
+              <Button color="inherit">Login</Button>
+            </Link>
+          </div>
+          <div>
+            <Link href='/sign-in'>
+              <Button color="inherit">Nueva Cuenta</Button>
+            </Link>
+          </div>
+
+        </>
+      )
+    }
+  }, [value])
+
+  const logout = () => {
+    removeValue();
+    removeToken()
   }
 
   return (
@@ -75,7 +90,7 @@ export default function RootLayout({
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Cinemas
             </Typography>
-            {button}
+            {menu}
           </Toolbar>
         </AppBar>
 
