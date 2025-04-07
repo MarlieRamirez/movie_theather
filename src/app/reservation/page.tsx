@@ -1,12 +1,12 @@
 'use client'
-import { useSearchParams } from 'next/navigation';
+import { redirect, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { getAvailability, getCinema } from '../../../network/lib/cinema';
 import { ChairRounded } from '@mui/icons-material';
 import { Button, IconButton } from '@mui/material';
 import { useLocalStorage } from 'usehooks-ts';
 
-function capacity() {
+function capacity(){
   //var chr = String.fromCharCode(65 + n);
   const searchParams = useSearchParams();
   const cinemaID = searchParams.get('cinema');
@@ -38,7 +38,7 @@ function capacity() {
         full_name: String.fromCharCode(65 + row) + '' + column,
         rows: row,
         column: column,
-        id_user: JSON.parse(user!).id,
+        id_user: user ? JSON.parse(user).id : 0,
         id_schedule: id
       }])
     } else {
@@ -51,7 +51,7 @@ function capacity() {
           full_name: String.fromCharCode(65 + row) + '' + column,
           rows: row,
           column: column,
-          id_user: JSON.parse(user!).id,
+          id_user: user ? JSON.parse(user).id : 0,
           id_schedule: id
         }])
       }
@@ -105,16 +105,28 @@ function capacity() {
       </div>
     );
   }
-  return rows;
+  return [saved, rows];
 }
 
-export default function page() {
 
+
+export default function page() {
+  const [user, setUser, removeUser] = useLocalStorage('user', '')
+  const [saved, rows] = capacity()
+  
+  const handleButton = ()=>{
+    if(user){
+      console.log(saved);
+    }else{
+      redirect('/login')
+    }
+    
+  }
   return (
     <div className='m-4 p-4'>
-      {capacity()}
+      {rows}
       <div className='d-flex flex-row justify-content-center'>
-      <Button variant='contained' color='secondary' className='w-50 py-2'>Comprar</Button>
+      <Button variant='contained' color='secondary' className='w-50 py-2' onClick={handleButton}>Comprar</Button>
       </div>
       
     </div>

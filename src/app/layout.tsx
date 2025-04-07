@@ -29,8 +29,6 @@ export default function RootLayout({
 }>) {
 
   const [menu, setMenu] = useState(<></>)
-  const [user, setUser] = useState({})
-  
   const [value, setValue, removeValue] = useLocalStorage('user', '')
   const [token, settoken, removeToken] = useLocalStorage('token', '')
 
@@ -38,11 +36,31 @@ export default function RootLayout({
     console.log('cambio')
 
     if (value !== '') {
-      setMenu(
-        <>
-          <Button color="inherit" onClick={logout}>Logout</Button>
-        </>
-      )
+
+      if (JSON.parse(value).role === 'admin') {
+        setMenu(
+          <>
+            <div>
+              <Link href='/cinemas-auth'>
+                <Button color="inherit">Cinema</Button>
+              </Link>
+            </div>
+            <div>
+              <Link href='/users'>
+                <Button color="inherit">Usuarios</Button>
+              </Link>
+            </div>
+            <Button color="inherit" onClick={logout}>Logout</Button>
+          </>
+        )
+      } else {
+        setMenu(
+          <>
+            <Button color="inherit" onClick={logout}>Logout</Button>
+          </>
+        )
+      }
+
     } else {
       setMenu(
         <>

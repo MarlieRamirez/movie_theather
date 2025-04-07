@@ -10,6 +10,7 @@ import { useState } from 'react';
 export default function Home() {
   const [user_name, setUserName] = useState("");
   const [pwd, setPwd] = useState("");
+  const [msg, setMSG] = useState("");
 
   const [value, setValue, removeValue] = useLocalStorage('user', '')
   const [token, setToken, removeToken] = useLocalStorage('token', '')
@@ -17,7 +18,7 @@ export default function Home() {
   const bLogin = () => {
     login(user_name, pwd).then(async response => {
       const token_tmp = response.data.accessToken;
-
+      setMSG('')
       setToken(token_tmp)
 
       getUser(token_tmp).then((res) => {
@@ -27,6 +28,7 @@ export default function Home() {
       })
     }).catch((error) => {
       if (error.status == 404) {
+        setMSG('Los datos son incorrectos')
         console.log('ERROR: Not found')
       }
     })
@@ -57,8 +59,9 @@ export default function Home() {
                 <Link href='/sign-in' className='text-primary'> <u>Registrate</u></Link>
               </Typography>
             </div>
-
-
+            <div className='w-100 mx-auto mb-4'>
+              <Typography className='text-danger'>{msg}</Typography>
+            </div>
           </form>
         </Row>
 
