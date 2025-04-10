@@ -7,6 +7,18 @@ export function login(user:string,pwd:string ){
     });
 }
 
+export function signIn(user:string, email:string,pwd:string ){
+  return axiosClient().post('/user/new',{
+      user_name: user,
+      email: email,
+      pwd: pwd
+  }).catch((error)=>{
+    if(error.status == 500){
+      return error
+    }
+  });
+}
+
 export function getUser(token:string){
     return axiosClient(token).get('/user')
 }

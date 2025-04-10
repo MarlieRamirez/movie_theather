@@ -9,13 +9,7 @@ import Link from "next/link";
 
 export default function Home() {
 
-  const [data, setData] = useState([{
-    id: 0,
-    img: 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png?20210521171500',
-    name: '',
-    init_date: '',
-    final_date: '',
-  }]);
+  const [data, setData] = useState([]);
 
   const [schedule, setSchedules] = useState([]);
   //MODAL
@@ -51,7 +45,7 @@ export default function Home() {
       <div>
         <Box>
           <Grid2 container spacing={5}>
-            {data.map(e => (
+            {data.map((e:Cinema) => (
               <>
                 <Card sx={{ minWidth: 245, maxWidth: 300 }} key={e.id}>
                   <CardMedia
@@ -88,7 +82,7 @@ export default function Home() {
           </DialogContent>
           <DialogActions>
             {
-              schedule.map((element) => (
+              schedule.map((element:Schedule) => (
                 <Link key={element.id} href={{pathname: '/reservation',query:{id: element.id, cinema:element.id_cinema}}} >
                   <Button className="w-100" variant="contained" color="secondary">{dateFormat(element.date, 'dd/mm/yyyy')}</Button>
                 </Link>

@@ -3,16 +3,17 @@
 import { redirect } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
-import { deleteUser, getAllUsers } from '../../../network/lib/user';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,  IconButton,  Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { useJwt } from "react-jwt";
-import { Block } from '@mui/icons-material';
+import { Block, Edit, Grid3x3, MovieRounded } from '@mui/icons-material';
+import { getFuture } from '../../../network/lib/cinema';
+import dateFormat from "dateformat";
 
 export default function page() {
   const [user, setUser, removeUser] = useLocalStorage('user', '')
   const [token, setToken, removeToken] = useLocalStorage('token', '')
   const { decodedToken, isExpired } = useJwt(token);
-  const [users, setAllUsers] = useState([]);
+  const [cinemas, setFutureCinema] = useState([]);
 
   //ELIMINAR
   const [id, setUserID] = useState(0);
@@ -32,8 +33,8 @@ export default function page() {
     if (isExpired || JSON.parse(user).role != 'admin') {
       redirect('/');
     } else {
-      getAllUsers(token).then((response) => {
-        setAllUsers(response.data)
+      getFuture().then((response) => {
+        setFutureCinema(response.data)
       }).catch((error)=>{
         if(error.status == 401){
           setToken('');
@@ -46,20 +47,6 @@ export default function page() {
   }, []);
 
 
-  const onDelete = ()=>{
-    if(isExpired){
-      setUser('');
-      setToken('')
-      redirect('/login')
-    }else{
-      deleteUser(token, id).then((response)=>{
-        getAllUsers(token).then((response) => {
-          setAllUsers(response.data)
-          handleClose();
-        });
-      })
-    }
-  }
 
   return (
     <div className='m-4 p-4 d-flex justify-content-center '>
@@ -68,22 +55,32 @@ export default function page() {
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
-              <TableCell>Usuario</TableCell>
-              <TableCell>Email</TableCell>
+              <TableCell>Sala</TableCell>
+              <TableCell>Pelicula</TableCell>
+              <TableCell>Capacidad</TableCell>
+              <TableCell>Fechas de disponibilidad</TableCell>
               <TableCell>Accion</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {
-              users.map((e:User)=>
+              cinemas.map((e:Cinema)=>
                 (
                 <TableRow key={'row'+e.id}>
                   <TableCell>{e.id}</TableCell>
-                  <TableCell>{e.user_name}</TableCell>
-                  <TableCell>{e.email}</TableCell>
+                  <TableCell>{e.name}</TableCell>
+                  <TableCell>{e.movie}</TableCell>
+                  <TableCell>{e.rows} x {e.columns}</TableCell>
+                  <TableCell>Del {dateFormat(e.init_date, 'dd/mm/yyyy')} al {dateFormat(e.final_date, 'dd/mm/yyyy')}</TableCell>
                   <TableCell>
-                    <IconButton title='Eliminar' color='error' className='border border-danger mx-2' onClick={()=>handleClickOpen(e.id)}>
-                      <Block className='rounded-circle' />
+                    
+
+                    <IconButton  title='Editar pelicula' color='warning' className='border border-warning mx-2' >
+                      <MovieRounded className='rounded-circle' />
+                    </IconButton>
+
+                    <IconButton title='Editar capacidad' color='warning' className='border border-warning mx-2' >
+                      <Grid3x3 className='rounded-circle' />
                     </IconButton>
                   </TableCell>
                 </TableRow>
@@ -110,7 +107,7 @@ export default function page() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cerrar</Button>
-          <Button color='error' onClick={onDelete} autoFocus>
+          <Button color='error'  autoFocus>
             Continuar
           </Button>
         </DialogActions>
