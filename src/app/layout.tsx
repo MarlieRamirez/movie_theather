@@ -69,12 +69,6 @@ export default function RootLayout({
               <Button color="inherit">Login</Button>
             </Link>
           </div>
-          <div>
-            <Link href='/sign-in'>
-              <Button color="inherit">Nueva Cuenta</Button>
-            </Link>
-          </div>
-
         </>
       )
     }
