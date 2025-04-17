@@ -37,10 +37,10 @@ export default function page() {
 
   const handleClickOpen = (edit: string, first_data: any, second_data: any, id: number) => {
     setEditable(edit);
+    setId(id);
 
     if (edit == 'movie') {
-      setFormValues({
-        
+      setFormValues({        
         id: id,
         rows: 0,
         columns: 0,
@@ -115,43 +115,6 @@ export default function page() {
     setOpen(false);
   };
 
-  const handleSave = () => {
-    if (editable == 'movie') {
-      setMovieData(id, formValues.movie, formValues.img_url, token)?.then((response) => {
-        console.log('Handle jalert: ' + response.data.message)
-        handleClose()
-        getAdminCinemas(token).then((res) => {
-          setFutureCinema(res.data)
-        })
-
-      }).catch((error) => {
-        if (error.status == 401) {
-          removeToken()
-          removeUser()
-          redirect('/login');
-        }
-      })
-    }
-
-    if (editable == 'capacity') {
-      setCapacity(id, +formValues.rows, +formValues.columns, token)?.then((response) => {
-
-        console.log('Handle jalert: ' + response.data.message)
-        handleClose()
-        getAdminCinemas(token).then((res) => {
-          setFutureCinema(res.data)
-        })
-      }).catch((error) => {
-        if (error.status == 401) {
-          removeToken()
-          removeUser()
-          redirect('/login');
-        }
-      })
-    }
-  }
-
-
   useEffect(() => {
     if (!isExpired && JSON.parse(user).role == 'admin') {
       getAdminCinemas(token).then((response) => {
@@ -169,9 +132,6 @@ export default function page() {
 
   }, []);
 
-  // useEffect(()=>{
-  //   console.log(formValues)
-  // },[formValues])
   return (
     <>
       <div className='m-4 d-flex justify-content-between '>
@@ -242,7 +202,7 @@ export default function page() {
 
         <CreateCinemaModal handleClose={handleCloseCreate} open={openCreate} />
 
-        <UpdateCinemaModal initValues={formValues} editable={editable} handleSave={handleSave} handleClose={handleClose} open={open} />
+        <UpdateCinemaModal initValues={formValues} editable={editable} handleClose={handleClose} open={open} />
 
         {/* 1000 */}
 
