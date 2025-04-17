@@ -4,9 +4,10 @@ import { redirect } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 import { deleteUser, getAllUsers } from '../../../network/lib/user';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,  IconButton,  Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { IconButton,  Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { useJwt } from "react-jwt";
 import { Block } from '@mui/icons-material';
+import DeleteModal from '@/components/DeleteModal';
 
 export default function page() {
   const [user, setUser, removeUser] = useLocalStorage('user', '')
@@ -52,7 +53,7 @@ export default function page() {
       setToken('')
       redirect('/login')
     }else{
-      deleteUser(token, id).then((response)=>{
+      deleteUser(token, id).then((res)=>{
         getAllUsers(token).then((response) => {
           setAllUsers(response.data)
           handleClose();
@@ -94,28 +95,7 @@ export default function page() {
         </Table>
       </TableContainer>
 
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Eliminar el registro?"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Esta seguro que desea eliminar permanentemente el registro seleccionado?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cerrar</Button>
-          <Button color='error' onClick={onDelete} autoFocus>
-            Continuar
-          </Button>
-        </DialogActions>
-      </Dialog>
-
+      <DeleteModal handleClose={handleClose} handleOpen={handleClickOpen} open={open} onDelete={onDelete}/>
     </div>
   )
 }
