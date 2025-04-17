@@ -5,7 +5,7 @@ import { useJwt } from 'react-jwt';
 import { useLocalStorage } from 'usehooks-ts';
 import { newCinema } from '../../network/lib/cinema';
 
-export default function CreateCinemaModal(props: {handleOpen: Function, handleClose: Function, open:boolean, reloadData:Function}) {
+export default function CreateCinemaModal(props: {handleClose: Function, open:boolean}) {
   const [user, setUser, removeUser] = useLocalStorage('user', '')
   const [token, setToken, removeToken] = useLocalStorage('token', '')
   const { decodedToken, isExpired } = useJwt(token);
@@ -34,7 +34,7 @@ export default function CreateCinemaModal(props: {handleOpen: Function, handleCl
     } else {
       newCinema(formValues, token)?.then((res)=>{
         props.handleClose()
-        props.reloadData()
+        window.location.reload();
       })
     }
   }

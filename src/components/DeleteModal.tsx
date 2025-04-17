@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
 import React from 'react'
 
-export default function DeleteModal(props: {onDelete: Function, handleOpen: Function, handleClose: Function, open:boolean}) {
+export default function DeleteModal(props: {onDelete: Function, handleClose: Function, open:boolean}) {
   
   return (
     <>

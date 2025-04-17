@@ -10,8 +10,8 @@ import { useEffect, useState } from 'react';
 export default function Home() {
   const [user_name, setUserName] = useState("");
   const [pwd, setPwd] = useState("");
-  const [email, setEmail] = useState("");//1046 1137
-  
+  const [email, setEmail] = useState("");//700
+
   const [msg, setMSG] = useState("");
 
   const [page, setPage] = useState('Login');
@@ -39,23 +39,25 @@ export default function Home() {
     })
   }
 
-  const bRegistrate = () =>{
-    if(email ==''|| pwd == ''|| user_name ==''){
+  const bRegistrate = () => {
+    if (email == '' || pwd == '' || user_name == '') {
       setMSG('Todos los campos son requeridos')
-    }else{
+    } else {
       setMSG('')
-      signIn(user_name,email,pwd).then((response)=>{
+      signIn(user_name, email, pwd).then((response) => {
         bLogin()
-        if(response.status == 500){
+        if (response.status == 500) {
           setMSG('Este usuario esta siendo utilizado')
         }
-        
+
       })
     }
   }
 
   //Handle Page
   const handleChangePage = () => {
+    setMSG('')
+    
     if (page == 'Login') {
       setPage('Crear Cuenta')
     } else {
@@ -66,9 +68,9 @@ export default function Home() {
   useEffect(() => {
     if (page == 'Crear Cuenta') {
       setElement(
-      <div className='w-100 mx-auto mb-4'>
-        <TextField onChange={(e) => setEmail(e.target.value)} className='w-100' id="email" type='email' label="Email" variant="outlined" />
-      </div>
+        <div className='w-100 mx-auto mb-4'>
+          <TextField onChange={(e) => setEmail(e.target.value)} className='w-100' id="email" type='email' label="Email" variant="outlined" />
+        </div>
       )
     } else {
       setElement(<></>);
@@ -90,14 +92,14 @@ export default function Home() {
             <div className='w-100 mx-auto mb-4'>
               <TextField onChange={(e) => setPwd(e.target.value)} className='w-100' id="Contraseña" type='password' label="Contraseña" variant="outlined" />
             </div>
-            
+
             <div className='w-100 mx-auto mb-4'>
               <Button className='w-100' variant='contained' color='secondary' onClick={page == 'Login' ? bLogin : bRegistrate}>{page}</Button>
             </div>
-            
+
             <div className='w-100 mx-auto mb-4'>
-              <Typography className='text-black'>No tienes una cuenta?
-                <Button className='text-capitalize' variant='text' onClick={handleChangePage}> <u>Registrate</u></Button>
+              <Typography className='text-black'>{page == 'Login' ? "No tienes una cuenta?" : "Ya tienes una cuenta?"}
+                <Button className='text-capitalize' variant='text' onClick={handleChangePage}> <u>{page == 'Login' ? 'Registrate' : 'Inicia Sesion'}</u></Button>
               </Typography>
             </div>
             <div className='w-100 mx-auto mb-4'>

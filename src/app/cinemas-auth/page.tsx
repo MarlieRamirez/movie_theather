@@ -5,11 +5,12 @@ import React, { useEffect, useState } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
 import { useJwt } from "react-jwt";
-import { Add, Block, Delete, Edit, Grid3x3, MovieRounded } from '@mui/icons-material';
+import { Add, Block, Delete, Edit, Grid3x3, MovieRounded, Update } from '@mui/icons-material';
 import { deleteCinema, getAdminCinemas, getCinema, setCapacity, setMovieData } from '../../../network/lib/cinema';
 import dateFormat from "dateformat";
 import DeleteModal from '@/components/DeleteModal';
 import CreateCinemaModal from '@/components/CreateCinemaModal';
+import UpdateCinemaModal from '@/components/UpdateCinemaModal';
 
 export default function page() {
   const [user, setUser, removeUser] = useLocalStorage('user', '')
@@ -24,28 +25,45 @@ export default function page() {
   const [openCreate, setOpenCreate] = useState(false);
 
   //state forms
+  const [formValues, setFormValues] = useState({
+    id: 0,
+    rows: 0,
+    columns: 0,
+    movie: '',
+    img_url: ''
+  });
+
   const [id, setId] = useState(0);
-  const [movie, setMovie] = useState('');
-  const [img, setImg] = useState('');
-  const [rows, setRows] = useState('');
-  const [columns, setColumns] = useState('');
 
   const handleClickOpen = (edit: string, first_data: any, second_data: any, id: number) => {
-    setId(id)
     setEditable(edit);
 
     if (edit == 'movie') {
-      setMovie(first_data);
-      setImg(second_data);
+      setFormValues({
+        
+        id: id,
+        rows: 0,
+        columns: 0,
+        movie: first_data,
+        img_url: second_data,
+        
+      })
     }
 
     if (edit == 'capacity') {
-      setRows(first_data);
-      setColumns(second_data);
+      setFormValues({
+        id: id,
+        rows: +first_data,
+        columns: +second_data,
+        movie: '',
+        img_url: '',
+        
+      })
     }
-
     setOpen(true);
   };
+
+
   //OPEN CREATE 
   const handleOpenCreate = () => {
     setOpenCreate(true);
@@ -54,22 +72,6 @@ export default function page() {
   const handleCloseCreate = () => {
     setOpenCreate(false);
   };
-
-  const reloadData = () =>{
-    if (!isExpired && JSON.parse(user).role == 'admin') {
-      getAdminCinemas(token).then((response) => {
-        setFutureCinema(response.data)
-      }).catch((error) => {
-        if (error.status == 401) {
-          removeToken()
-          removeUser()
-          redirect('/login');
-        }
-      })
-    } else {
-      redirect('/');
-    }
-  }
 
   //HANDLE DELETE FUNCTIONS
   const hanldeOpenDelete = (id: number) => {
@@ -88,10 +90,12 @@ export default function page() {
       removeToken()
       redirect('/login')
     } else {
+      handleClose();
+
       deleteCinema(token, id).then((res) => {
-        getCinema(token).then((response) => {
+        getAdminCinemas(token).then((response) => {
+
           setFutureCinema(response.data)
-          handleClose();
         });
       })
     }
@@ -101,16 +105,19 @@ export default function page() {
   const handleClose = () => {
     setId(0)
     setEditable('');
-    setMovie('');
-    setImg('');
-    setRows('');
-    setColumns('');
+    setFormValues({
+      id: 0,
+      rows: 0,
+      columns: 0,
+      movie: '',
+      img_url: ''
+    })
     setOpen(false);
   };
 
   const handleSave = () => {
     if (editable == 'movie') {
-      setMovieData(id, movie, img, token)?.then((response) => {
+      setMovieData(id, formValues.movie, formValues.img_url, token)?.then((response) => {
         console.log('Handle jalert: ' + response.data.message)
         handleClose()
         getAdminCinemas(token).then((res) => {
@@ -127,7 +134,7 @@ export default function page() {
     }
 
     if (editable == 'capacity') {
-      setCapacity(id, +rows, +columns, token)?.then((response) => {
+      setCapacity(id, +formValues.rows, +formValues.columns, token)?.then((response) => {
 
         console.log('Handle jalert: ' + response.data.message)
         handleClose()
@@ -162,7 +169,9 @@ export default function page() {
 
   }, []);
 
-
+  // useEffect(()=>{
+  //   console.log(formValues)
+  // },[formValues])
   return (
     <>
       <div className='m-4 d-flex justify-content-between '>
@@ -221,7 +230,7 @@ export default function page() {
 
 
                     </TableCell>
-                  </TableRow>//726
+                  </TableRow>
                 )
                 )
               }
@@ -229,48 +238,13 @@ export default function page() {
           </Table>
         </TableContainer>
 
-        <DeleteModal handleClose={handleCloseDelete} handleOpen={hanldeOpenDelete} open={openDelete} onDelete={onDelete} />
-        
-        <CreateCinemaModal handleClose={handleCloseCreate} handleOpen={handleOpenCreate} open={openCreate} reloadData={reloadData}/>
+        <DeleteModal handleClose={handleCloseDelete} open={openDelete} onDelete={onDelete} />
 
-        <Dialog
-          fullWidth
-          open={open}
-          onClose={handleClose}
-        >
-          <DialogTitle id="alert-dialog-title">
-            {editable == 'movie' ? "Modificar pelicula" : editable == 'capacity' ? 'Modificar capacidad' : ''}
-          </DialogTitle>
-          <DialogContent>
-            <form action="">
-              {editable == 'movie' ?
-                <>
-                  <div className='w-100 mx-auto my-4'>
-                    <TextField onChange={(e) => setMovie(e.target.value)} className='w-100' id="movie" label="Película" variant="outlined" value={movie} />
-                  </div>
+        <CreateCinemaModal handleClose={handleCloseCreate} open={openCreate} />
 
-                  <div className='w-100 mx-auto my-4'>
-                    <TextField onChange={(e) => setImg(e.target.value)} className='w-100' id="img_url" label="Imagen url" variant="outlined" value={img} />
-                  </div>
-                </> : editable == 'capacity' ?
-                  <>
-                    <div className='w-100 mx-auto my-4'>
-                      <TextField onChange={(e) => setRows(e.target.value)} className='w-100' type='number' id="rows" label="Filas" variant="outlined" value={rows} />
-                    </div>
+        <UpdateCinemaModal initValues={formValues} editable={editable} handleSave={handleSave} handleClose={handleClose} open={open} />
 
-                    <div className='w-100 mx-auto my-4'>
-                      <TextField onChange={(e) => setColumns(e.target.value)} className='w-100' type='number' id="columns" label="Columnas" variant="outlined" value={columns} />
-                    </div>
-                  </> : <></>}
-            </form>
-          </DialogContent>
-          <DialogActions >
-            <Button color='error' onClick={handleClose}>Cerrar</Button>
-            <Button color='info' variant='outlined' autoFocus onClick={handleSave}>
-              Guardar
-            </Button>
-          </DialogActions>
-        </Dialog>
+        {/* 1000 */}
 
       </div>
     </>

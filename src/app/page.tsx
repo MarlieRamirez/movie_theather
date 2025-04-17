@@ -1,6 +1,5 @@
 'use client'
 
-import styles from "./page.module.css";
 import { Box, Button, Card, CardContent, CardMedia, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Grid2, ListItem, MenuItem, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { getFuture, getSchedules } from "../../network/lib/cinema";
@@ -45,7 +44,7 @@ export default function Home() {
       <div>
         <Box>
           <Grid2 container spacing={5}>
-            {data.map((e:Cinema) => (
+            {data.map((e: Cinema) => (
               <>
                 <Card sx={{ minWidth: 245, maxWidth: 300 }} key={e.id}>
                   <CardMedia
@@ -55,8 +54,12 @@ export default function Home() {
                     title="green iguana" />
                   <CardContent>
                     <Typography variant="h5" component="div">
+                      {e.movie}
+                    </Typography>
+                    <Typography variant="h6" component="div">
                       {e.name}
                     </Typography>
+                    
                     <Divider></Divider>
                     <Typography variant="body1" >
                       Del {dateFormat(e.init_date, 'dd/mm/yyyy')} al {dateFormat(e.final_date, 'dd/mm/yyyy')}
@@ -81,13 +84,16 @@ export default function Home() {
 
           </DialogContent>
           <DialogActions>
-            {
-              schedule.map((element:Schedule) => (
-                <Link key={element.id} href={{pathname: '/reservation',query:{id: element.id, cinema:element.id_cinema}}} >
-                  <Button className="w-100" variant="contained" color="secondary">{dateFormat(element.date, 'dd/mm/yyyy')}</Button>
-                </Link>
-              ))
-            }
+            <div>
+              {
+                schedule.map((element: Schedule) => (
+                  <Link key={element.id} href={{ pathname: '/reservation', query: { id: element.id, cinema: element.id_cinema } }} >
+                    <Button className="w-min mx-4 my-2 p-2" variant="contained" color="secondary">{dateFormat(element.date, 'dd/mm/yyyy')}</Button>
+                  </Link>
+                ))
+              }
+            </div>
+
           </DialogActions>
         </Dialog>
       </div>
