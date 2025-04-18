@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material'
+import { Alert, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { getAdminCinemas, setCapacity, setMovieData } from '../../network/lib/cinema';
 import { useLocalStorage } from 'usehooks-ts';
@@ -12,10 +12,14 @@ export default function UpdateCinemaModal(props: {
     movie: string,
     img_url: string
   },
-  editable: string, handleClose: Function, open: boolean
+  editable: string, handleClose: Function, open: boolean, reload: Function
 }) {
   const [user, setUser, removeUser] = useLocalStorage('user', '')
   const [token, setToken, removeToken] = useLocalStorage('token', '')
+
+  const [openAlert, setOpenAlert] = useState(false)
+  const [alert, setAlert] = useState('');
+
 
   const [formValues, setFormValues] = useState({
     id: props.initValues.id,
@@ -37,10 +41,9 @@ export default function UpdateCinemaModal(props: {
 
     if (props.editable == 'movie') {
       setMovieData(formValues.id, formValues.movie, formValues.img_url, token)?.then((response) => {
-        console.log('Handle jalert: ' + response.data.message)
         props.handleClose()
+        setAlert(response.data.message)
         
-        window.location.reload();
 
       }).catch((error) => {
         if (error.status == 401) {
@@ -53,11 +56,9 @@ export default function UpdateCinemaModal(props: {
 
     if (props.editable == 'capacity') {
       setCapacity(formValues.id, +formValues.rows, +formValues.columns, token)?.then((response) => {
-
-        console.log('Handle jalert: ' + response.data.message)
-        props.handleClose()
         
-        window.location.reload();
+        props.handleClose()
+        setAlert(response.data.message)
       }).catch((error) => {
         if (error.status == 401) {
           removeToken()
@@ -66,6 +67,14 @@ export default function UpdateCinemaModal(props: {
         }
       })
     }
+
+    setOpenAlert(true)
+
+    setTimeout(()=>{
+      setOpenAlert(false)
+    }, 3000)
+    props.reload()
+
   }
 
   useEffect(() => {
@@ -74,6 +83,13 @@ export default function UpdateCinemaModal(props: {
 
   return (
     <>
+      <div className={ 'position-in' + (openAlert ? ' front' :  alert == '' ? ' none' : ' out')}>
+        <Alert className='' severity="success" onClose={() => {setOpenAlert(false)}}>
+          {alert}
+        </Alert>
+      </div>
+
+
       <Dialog
         fullWidth
         open={props.open}
@@ -112,6 +128,8 @@ export default function UpdateCinemaModal(props: {
           </Button>
         </DialogActions>
       </Dialog>
+
+
     </>
   )
 }

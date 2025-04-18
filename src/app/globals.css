@@ -22,6 +22,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  z-index: 0;
 }
 
 * {
@@ -44,4 +45,37 @@ a {
 .divider{
   border: solid;
   border-color: #ffffff;
+}
+
+.none{
+  display: none;
+}
+
+.out{
+  animation-name: out;
+  animation-duration: 1s;
+  animation-fill-mode: forwards
+}
+.position-in{
+  z-index: 10;
+  position: fixed;
+  top: 30px;
+  opacity: 90%;
+  height: min-content;
+}
+
+.front{
+  display: block;
+  animation-name: example;
+  animation-duration: 1s;
+}
+
+@keyframes example {
+  from {top: 50px;}
+  to {top: 30px;}
+}
+
+@keyframes out {
+  from {opacity: 90%;}
+  to {opacity: 0%; display: none;}
 }

@@ -1,16 +1,18 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, TextFieldProps } from '@mui/material';
+import { Alert, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, TextFieldProps } from '@mui/material';
 import { redirect } from 'next/navigation';
 import React, { useState } from 'react'
 import { useJwt } from 'react-jwt';
 import { useLocalStorage } from 'usehooks-ts';
 import { newCinema } from '../../network/lib/cinema';
 
-export default function CreateCinemaModal(props: {handleClose: Function, open:boolean}) {
+export default function CreateCinemaModal(props: { handleClose: Function, open: boolean, reload: Function }) {
   const [user, setUser, removeUser] = useLocalStorage('user', '')
   const [token, setToken, removeToken] = useLocalStorage('token', '')
   const { decodedToken, isExpired } = useJwt(token);
 
-  
+  const [openAlert, setOpenAlert] = useState(false);
+  const [alert, setAlert] = useState('');
+
   const [formValues, setFormValues] = useState({
     name: '',
     rows: 0,
@@ -19,7 +21,7 @@ export default function CreateCinemaModal(props: {handleClose: Function, open:bo
     img_url: ''
   });
 
-  const handleChange = (value:any, id:string) => {
+  const handleChange = (value: any, id: string) => {
     setFormValues((prevValues) => ({
       ...prevValues,
       [id]: value
@@ -32,19 +34,35 @@ export default function CreateCinemaModal(props: {handleClose: Function, open:bo
       removeToken()
       redirect('/login')
     } else {
-      newCinema(formValues, token)?.then((res)=>{
+      newCinema(formValues, token)?.then((res) => {
         props.handleClose()
-        window.location.reload();
+        setOpenAlert(true)
+        setAlert(res.data.message);
+        setTimeout(() => {
+          setOpenAlert(false)
+        }, 3000)
+        
+
       })
     }
+
+
+
+    props.reload()
   }
 
   return (
     <>
+      <div className={'position-in' + (openAlert ? ' front' : alert == '' ? ' none' : ' out')}>
+        <Alert className='' severity="success" onClose={() => { setOpenAlert(false) }}>
+          {alert}
+        </Alert>
+      </div>
+
       <Dialog
         fullWidth
         open={props.open}
-        onClose={()=>props.handleClose()}
+        onClose={() => props.handleClose()}
       >
         <DialogTitle id="alert-dialog-title">
           Crear nueva sala y funciones
@@ -52,7 +70,7 @@ export default function CreateCinemaModal(props: {handleClose: Function, open:bo
         <DialogContent>
           <form action="">
             <div className='w-100 mx-auto my-4'>
-              <TextField onChange={(e) => handleChange( e.target.value, e.target.id)} className='w-100' id="name" label="Nombre de la Sala" variant="outlined" value={formValues.name} />
+              <TextField onChange={(e) => handleChange(e.target.value, e.target.id)} className='w-100' id="name" label="Nombre de la Sala" variant="outlined" value={formValues.name} />
             </div>
 
             <div className='w-100 mx-auto my-4'>
@@ -73,7 +91,7 @@ export default function CreateCinemaModal(props: {handleClose: Function, open:bo
           </form>
         </DialogContent>
         <DialogActions >
-          <Button color='error' onClick={()=> props.handleClose()}>Cerrar</Button>
+          <Button color='error' onClick={() => props.handleClose()}>Cerrar</Button>
           <Button color='info' variant='outlined' autoFocus onClick={onCreate}>
             Guardar
           </Button>

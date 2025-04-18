@@ -82,9 +82,9 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <Head>
-        <title>My page title</title>
-      </Head>
+      <head>
+        <title>Cinemas Galerias</title>
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <AppBar position="static">
           <Toolbar>
