@@ -1,6 +1,5 @@
 'use client'
-import Row from 'react-bootstrap/Row';
-import { Button, Container, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import Link from 'next/link';
 import { getUser, login, signIn } from '../../../network/lib/user';
 import { redirect, RedirectType } from 'next/navigation';
@@ -45,9 +44,11 @@ export default function Home() {
     } else {
       setMSG('')
       signIn(user_name, email, pwd).then((response) => {
-        bLogin()
         if (response.status == 500) {
           setMSG('Este usuario esta siendo utilizado')
+        }
+        else{
+          bLogin()
         }
 
       })
@@ -57,7 +58,7 @@ export default function Home() {
   //Handle Page
   const handleChangePage = () => {
     setMSG('')
-    
+
     if (page == 'Login') {
       setPage('Crear Cuenta')
     } else {
@@ -68,7 +69,7 @@ export default function Home() {
   useEffect(() => {
     if (page == 'Crear Cuenta') {
       setElement(
-        <div className='w-100 mx-auto mb-4'>
+        <div className='w-100 p'>
           <TextField onChange={(e) => setEmail(e.target.value)} className='w-100' id="email" type='email' label="Email" variant="outlined" />
         </div>
       )
@@ -79,34 +80,34 @@ export default function Home() {
 
   return (
     <>
-      <Container maxWidth='xs' className='my-5 pt-4 bg-secondary-subtle border-light rounded-4 container-sm '>
-        <Typography className='text-center text-black ' variant='h4'>{page}</Typography>
+      <Container maxWidth='xs' className='login my-5  bg-secondary-subtle rounded-4 container-sm '>
+        <Typography className='text-center p' variant='h4'>{page}</Typography>
 
 
-        <Row >
-          <form className='w-100 pt-3 mx-auto '>
-            <div className='w-100 mx-auto my-4'>
+        <Box >
+          <form className=''>
+            <div className='w-100 p'>
               <TextField onChange={(e) => setUserName(e.target.value)} className='w-100' id="user" label="Usuario" variant="outlined" />
             </div>
             {element}
-            <div className='w-100 mx-auto mb-4'>
+            <div className='w-100 p'>
               <TextField onChange={(e) => setPwd(e.target.value)} className='w-100' id="Contraseña" type='password' label="Contraseña" variant="outlined" />
             </div>
 
-            <div className='w-100 mx-auto mb-4'>
+            <div className='w-100 p'>
               <Button className='w-100' variant='contained' color='secondary' onClick={page == 'Login' ? bLogin : bRegistrate}>{page}</Button>
             </div>
 
-            <div className='w-100 mx-auto mb-4'>
-              <Typography className='text-black'>{page == 'Login' ? "No tienes una cuenta?" : "Ya tienes una cuenta?"}
+            <div className='w-100 p'>
+              <Typography className='text-black text-center'>{page == 'Login' ? "No tienes una cuenta?" : "Ya tienes una cuenta?"}
                 <Button className='text-capitalize' variant='text' onClick={handleChangePage}> <u>{page == 'Login' ? 'Registrate' : 'Inicia Sesion'}</u></Button>
               </Typography>
             </div>
-            <div className='w-100 mx-auto mb-4'>
+            <div className='w-100'>
               <Typography className='text-danger'>{msg}</Typography>
             </div>
           </form>
-        </Row>
+        </Box>
 
       </Container>
 

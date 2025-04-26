@@ -14,6 +14,7 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  min-height: 100vh;
 }
 
 body {
@@ -43,8 +44,9 @@ a {
 }
 
 .divider{
-  border: solid;
+  border: 1px solid;
   border-color: #ffffff;
+  margin-bottom: 30px;
 }
 
 .none{
@@ -78,4 +80,122 @@ a {
 @keyframes out {
   from {opacity: 90%;}
   to {opacity: 0%; display: none;}
+}
+
+.login{
+  background-color: #ededed;
+  color:#0a0a0a;
+  padding: 3pc;
+  margin-top: 20px;
+  border: 3px solid #2f2030;
+  box-shadow: 15px 20px 10px #9a4f9e;
+  border-radius: 40px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.movie-cards{
+  margin: 50px;
+  display: grid ;
+  justify-content: space-evenly;
+}
+
+.text-field{
+  padding-bottom: 2vh;
+  padding-top: 2vh;
+}
+
+.row{
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.title{
+  background: #020024;
+  background: linear-gradient(198deg,rgba(2, 0, 36, 1) 0%, rgba(13, 7, 97, 1) 100%);
+  font-size: larger;
+  margin: 0 !important;
+  padding: 2pc;
+}
+
+.fit{
+  display: inline-block;
+  height: fit-content;
+}
+
+.card:hover{
+  box-shadow: 0px 30px 10px #026153;
+}
+
+.d-flex{
+  display: flex;
+}
+
+.justify-content-center{
+  justify-content: center;
+}
+
+.title-action{
+  align-items: center;
+  margin: 30px;
+}
+
+.content-danger{
+  align-items: center;
+  color: #d32f2f;
+}
+
+.text-danger{
+  color: #d32f2f;
+  margin-left: 10px;
+  margin-top: 3px;
+}
+
+.p{
+  padding-bottom: 2pc;
+}
+
+.mx{
+  margin-left: 1vw;
+  margin-right: 1vw;
+}
+
+.my{
+  margin-top: 1vh;
+  margin-bottom: 2vh;
+}
+
+.text-center{
+  text-align: center;
+}
+.w-100{
+  width: 100%;
+}
+
+.w-75{
+  width: 75% !important;
+}
+
+.border-danger{
+  border: 1px solid #d32f2f !important;
+  margin-left: 5px !important;
+  margin-right:5px!important ;
+}
+
+.border-warning{
+  border: 1px solid #ed6c02 !important;
+  margin-left: 5px !important;
+  margin-right:5px!important ;
+}
+
+.h-warning:hover{
+  background-color: #ffd2ad !important;
+}
+
+.h-danger:hover{
+  background-color: #ffd0d0 !important;
+}
+
+.table{
+  margin-bottom: 30px;
 }

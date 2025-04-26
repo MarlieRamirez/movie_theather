@@ -38,11 +38,11 @@ export default function Home() {
   }
 
   return (
-    <div className='m-4 p-4 align-center'>
+    <div className='movie-cards '>
       <div>
         {
           isLoading ?
-            <div className=" d-flex justify-content-center">
+            <div className="d-flex justify-content-center">
               <LoadingComponent />
             </div>
             :
@@ -51,10 +51,10 @@ export default function Home() {
                 <Grid2 container spacing={5}>
                   {data.map((e: Cinema) => (
                     <>
-                      <Card sx={{ minWidth: 245, maxWidth: 300 }} key={e.id}>
+                      <Card className="card" sx={{ width: 250 }} key={e.id}>
                         <CardMedia
                           component='img'
-                          height='300'
+                          height='250'
                           src={e.img}
                           title="green iguana" />
                         <CardContent>
@@ -92,11 +92,11 @@ export default function Home() {
 
           </DialogContent>
           <DialogActions>
-            <div>
+            <div className="">
               {
                 schedule.map((element: Schedule) => (
-                  <Link key={element.id} href={{ pathname: '/reservation', query: { id: element.id, cinema: element.id_cinema } }} >
-                    <Button className="w-min mx-4 my-2 p-2" variant="contained" color="secondary">{dateFormat(element.date, 'dd/mm/yyyy')}</Button>
+                  <Link className="mx my fit" key={element.id} href={{ pathname: '/reservation', query: { id: element.id, cinema: element.id_cinema } }} >
+                    <Button className="my button" variant="contained" color="secondary">{dateFormat(element.date, 'dd/mm/yyyy')}</Button>
                   </Link>
                 ))
               }

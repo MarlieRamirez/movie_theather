@@ -11,8 +11,6 @@ import dateFormat from "dateformat";
 import DeleteModal from '@/components/DeleteModal';
 import CreateCinemaModal from '@/components/CreateCinemaModal';
 import UpdateCinemaModal from '@/components/UpdateCinemaModal';
-
-import Image from 'next/image';
 import LoadingComponent from '@/components/LoadingComponent';
 
 export default function page() {
@@ -144,20 +142,21 @@ export default function page() {
 
   return (
     <>
-      <div className='m-4 d-flex justify-content-between '>
-        <div className='w-100 mt-3'>
+      <div className=' d-flex title-action title justify-content-between '>
+        <div className='w-100'>
           <h2 className='text-center '>Administración de salas</h2>
         </div>
 
         <Button className='' color='info' variant='contained' onClick={handleCreate}> <Add className='m-1' /> Nueva Sala</Button>
       </div>
-      <div className='divider mb-3'></div>
+      <div className="divider"></div>
+      
       <div className='d-flex justify-content-center '>
         {
           isLoading ?
             <LoadingComponent/>
             :
-            <TableContainer component={Paper} className='w-75'>
+            <TableContainer component={Paper} className='w-75 table'>
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                   <TableRow>
@@ -182,23 +181,24 @@ export default function page() {
                         <TableCell>
 
                           {
-                            dateFormat(e.final_date, 'dd/mm/yyyy') > dateFormat(new Date(), 'dd/mm/yyyy') ?
+                            new Date(e.final_date) > new Date() ? 
+                            
                               <>
 
-                                <IconButton title='Editar pelicula' color='warning' className='border border-warning mx-2' onClick={() => handleClickOpen('movie', e.movie, e.img, e.id)} >
-                                  <MovieRounded className='rounded-circle' />
+                                <IconButton title='Editar pelicula' color='warning' className='border-warning h-warning' onClick={() => handleClickOpen('movie', e.movie, e.img, e.id)} >
+                                  <MovieRounded className='' />
                                 </IconButton>
 
-                                <IconButton title='Editar capacidad' color='warning' className='border border-warning mx-2' onClick={() => handleClickOpen('capacity', e.rows, e.columns, e.id)} >
-                                  <Grid3x3 className='rounded-circle' />
+                                <IconButton title='Editar capacidad' color='warning' className='border-warning h-warning' onClick={() => handleClickOpen('capacity', e.rows, e.columns, e.id)} >
+                                  <Grid3x3 />
                                 </IconButton>
 
-                                <IconButton title='Eliminar Sala' color='error' className='border border-danger mx-2' onClick={() => handleDeleteModal(e.id)} >
-                                  <Delete className='rounded-circle' />
+                                <IconButton title='Eliminar Sala' color='error' className='border-danger h-danger' onClick={() => handleDeleteModal(e.id)} >
+                                  <Delete />
                                 </IconButton>
 
                               </> :
-                              <div className='text-danger'><Block color='error' /> Esta sala ya ha expirado</div>
+                              <div className='d-flex content-danger my'><Block color='error' /> <p className='text-danger'>Esta sala ya ha expirado</p></div>
                           }
 
 

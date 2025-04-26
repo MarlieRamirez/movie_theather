@@ -73,6 +73,7 @@ export default function UpdateCinemaModal(props: {
     setTimeout(()=>{
       setOpenAlert(false)
     }, 3000)
+    
     props.reload()
 
   }
@@ -98,24 +99,24 @@ export default function UpdateCinemaModal(props: {
         <DialogTitle id="alert-dialog-title">
           {props.editable == 'movie' ? "Modificar pelicula" : props.editable == 'capacity' ? 'Modificar capacidad' : ''}
         </DialogTitle>
-        <DialogContent>
+        <DialogContent >
           <form action="">
             {props.editable == 'movie' ?
               <>
-                <div className='w-100 mx-auto my-4'>
+                <div className='text-field'>
                   <TextField onChange={(e) => handleChange(e.target.value, e.target.id)} className='w-100' id="movie" label="Película" variant="outlined" value={formValues.movie} />
                 </div>
 
-                <div className='w-100 mx-auto my-4'>
+                <div className='text-field'>
                   <TextField onChange={(e) => handleChange(e.target.value, e.target.id)} className='w-100' id="img_url" label="Imagen url" variant="outlined" value={formValues.img_url} />
                 </div>
               </> : props.editable == 'capacity' ?
                 <>
-                  <div className='w-100 mx-auto my-4'>
+                  <div className='text-field'>
                     <TextField onChange={(e) => handleChange(e.target.value, e.target.id)} className='w-100' type='number' id="rows" label="Filas" variant="outlined" value={formValues.rows} />
                   </div>
 
-                  <div className='w-100 mx-auto my-4'>
+                  <div className='text-field'>
                     <TextField onChange={(e) => handleChange(e.target.value, e.target.id)} className='w-100' type='number' id="columns" label="Columnas" variant="outlined" value={formValues.columns} />
                   </div>
                 </> : <></>}

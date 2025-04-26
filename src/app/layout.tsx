@@ -1,5 +1,4 @@
 'use client'
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AppBar, Button, IconButton, Toolbar, Typography } from "@mui/material";
@@ -41,12 +40,12 @@ export default function RootLayout({
         setMenu(
           <>
             <div>
-              <Link href='/cinemas-auth'>
+              <Link key={'menu-cinema'} href='/cinemas-auth'>
                 <Button color="inherit">Cinema</Button>
               </Link>
             </div>
             <div>
-              <Link href='/users'>
+              <Link key={'menu-user'} href='/users'>
                 <Button color="inherit">Usuarios</Button>
               </Link>
             </div>

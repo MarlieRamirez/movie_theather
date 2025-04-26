@@ -30,10 +30,10 @@ function capacity(){
     column: 0,
     id_user: 0,
     id_schedule: id
-  }]);
+  }]); 
 
   const handleSaved = (row: number, column: number) => {
-    if (saved[0].full_name == '') {
+    if (saved.length == 0 || saved[0].full_name == ''  ) {
       setSaved([{
         full_name: String.fromCharCode(65 + row) + '' + column,
         rows: row,
@@ -88,9 +88,9 @@ function capacity(){
       columns.push(
         <div key={'container' + i + c}>
 
-          <Button  onClick={() => { handleSaved(i, c) }} sx={index != -1 ? { 'pointer-events': 'none' } : {}} key={name} variant='contained' color={color} aria-disabled={index != -1} className='rounded-circle py-3'>
+          <IconButton type='button' onClick={() => { handleSaved(i, c) }} sx={index != -1 ? { 'pointer-events': 'none' } : {}} key={name} color={color} aria-disabled={index != -1} >
             <ChairRounded key={'icon' + i + '' + c} sx={{ width: '5pc', height: '5pc' }} />
-          </Button>
+          </IconButton>
 
           <p className='text-center'>{String.fromCharCode(65 + i) + '' + c}</p>
         </div>
@@ -100,7 +100,7 @@ function capacity(){
     }
 
     rows.push(
-      <div key={i} className='d-flex flex-row justify-content-center gap-3 mb-4'>
+      <div key={i} className='d-flex justify-content-center row'>
         {columns}
       </div>
     );
@@ -125,8 +125,8 @@ export default function page() {
   return (
     <div className='m-4 p-4'>
       {rows}
-      <div className='d-flex flex-row justify-content-center'>
-      <Button variant='contained' color='secondary' className='w-50 py-2' onClick={handleButton}>Comprar</Button>
+      <div className='d-flex justify-content-center p'>
+      <Button variant='contained' color='secondary' className='w-50 p' onClick={handleButton}>Comprar</Button>
       </div>
       
     </div>

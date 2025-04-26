@@ -62,41 +62,60 @@ export default function page() {
   }
 
   return (
-    <div className='m-4 p-4 d-flex justify-content-center '>
-      {
-        isLoading ?
-          <LoadingComponent /> :
-          <TableContainer component={Paper} className='w-75'>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>ID</TableCell>
-                  <TableCell>Usuario</TableCell>
-                  <TableCell>Email</TableCell>
-                  <TableCell>Accion</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {
-                  users.map((e: User) =>
-                  (
-                    <TableRow key={'row' + e.id}>
-                      <TableCell>{e.id}</TableCell>
-                      <TableCell>{e.user_name}</TableCell>
-                      <TableCell>{e.email}</TableCell>
-                      <TableCell>
-                        <IconButton title='Eliminar' color='error' className='border border-danger mx-2' onClick={() => handleDeleteModal(e.id)}>
-                          <Block className='rounded-circle' />
-                        </IconButton>
-                      </TableCell>
+    <div className='m-4 p-4'>
+      
+
+      <div className='title d-flex title-action justify-content-between '>
+        <div className='w-100 mt-3'>
+          <h2 className='text-center '>Desactivar usuarios</h2>
+        </div>
+      </div>
+
+      <div className="divider"></div>
+
+      <div className='d-flex justify-content-center '>
+        {
+          isLoading ?
+            <LoadingComponent /> :
+            <>
+
+              <TableContainer component={Paper} className='w-75'>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>ID</TableCell>
+                      <TableCell>Usuario</TableCell>
+                      <TableCell>Email</TableCell>
+                      <TableCell>Accion</TableCell>
                     </TableRow>
-                  )
-                  )
-                }
-              </TableBody>
-            </Table>
-          </TableContainer>
-      }
+                  </TableHead>
+                  <TableBody>
+                    {
+                      users.map((e: User) =>
+                      (
+                        <TableRow key={'row' + e.id}>
+                          <TableCell>{e.id}</TableCell>
+                          <TableCell>{e.user_name}</TableCell>
+                          <TableCell>{e.email}</TableCell>
+                          <TableCell>
+                            <IconButton title='Eliminar' color='error' className='border border-danger mx-2' onClick={() => handleDeleteModal(e.id)}>
+                              <Block className='rounded-circle' />
+                            </IconButton>
+                          </TableCell>
+                        </TableRow>
+                      )
+                      )
+                    }
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </>
+        }
+      </div>
+
+
+
+
 
 
       <DeleteModal handleClose={handleDeleteModal} open={open} onDelete={onDelete} />

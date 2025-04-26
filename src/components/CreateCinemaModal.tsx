@@ -69,22 +69,22 @@ export default function CreateCinemaModal(props: { handleClose: Function, open: 
         </DialogTitle>
         <DialogContent>
           <form action="">
-            <div className='w-100 mx-auto my-4'>
+            <div className='text-field'>
               <TextField onChange={(e) => handleChange(e.target.value, e.target.id)} className='w-100' id="name" label="Nombre de la Sala" variant="outlined" value={formValues.name} />
             </div>
 
-            <div className='w-100 mx-auto my-4'>
+            <div className='text-field'>
               <TextField onChange={(e) => handleChange(e.target.value, e.target.id)} className='w-100' id="movie" label="Película" variant="outlined" value={formValues.movie} />
             </div>
 
-            <div className='w-100 mx-auto my-4'>
+            <div className='text-field'>
               <TextField onChange={(e) => handleChange(e.target.value, e.target.id)} className='w-100' id="img_url" label="Imagen url" variant="outlined" value={formValues.img_url} />
             </div>
-            <div className='w-100 mx-auto my-4'>
+            <div className='text-field'>
               <TextField onChange={(e) => handleChange(e.target.value, e.target.id)} className='w-100' type='number' id="rows" label="Filas" variant="outlined" value={formValues.rows} />
             </div>
 
-            <div className='w-100 mx-auto my-4'>
+            <div className='text-field'>
               <TextField onChange={(e) => handleChange(e.target.value, e.target.id)} className='w-100' type='number' id="columns" label="Columnas" variant="outlined" value={formValues.columns} />
             </div>
 
