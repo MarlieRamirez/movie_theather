@@ -29,7 +29,7 @@ export default function CinemaCapacity(props: { handleSaved(): Function, saved: 
   }, []);
 
 
-  const rows: [React.JSX.Element] = [<></>];
+  const rows: [React.JSX.Element] = [];
 
   for (let i = 0; i < props.cinema.rows; i++) {
     const columns = []
