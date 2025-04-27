@@ -147,7 +147,7 @@ export default function page() {
           <h2 className='text-center '>Administración de salas</h2>
         </div>
 
-        <Button className='' color='info' variant='contained' onClick={handleCreate}> <Add className='m-1' /> Nueva Sala</Button>
+        <Button className='outline' color='info' variant='contained' onClick={handleCreate}> <Add className='m-1' /> Nueva Sala</Button>
       </div>
       <div className="divider"></div>
       

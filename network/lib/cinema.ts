@@ -54,3 +54,7 @@ export function setCapacity(id: number, rows: number, columns: number, token:str
 export function deleteCinema(token:string, id:number){
   return axiosClient(token).delete('/admin/cinema/'+id)
 }
+
+export function saveSeat(token:string, seat: Seat){
+  return axiosClient(token).post('/seats',seat)
+}
