@@ -5,11 +5,12 @@ import { Box, Button, Step, StepLabel, Stepper, TableCell, TableRow, TextField, 
 import { useLocalStorage } from 'usehooks-ts';
 import { useJwt } from 'react-jwt';
 import CinemaCapacity from '@/components/CinemaCapacity';
-import { getCinema, saveSeat } from '../../../network/lib/cinema';
+import { getCinema, getSchedule, saveSeat } from '../../../network/lib/cinema';
 import SeatsBill from '@/components/SeatsBill';
 import ConfirmBill from '@/components/ConfirmBill';
 import QRCode from 'react-qr-code';
 import { toPng } from 'html-to-image';
+import dateFormat from "dateformat";
 
 export default function page() {
   const steps = ['Seleccionar asientos a reservar', 'Ingresar datos para compra', 'Confirmar información'];
@@ -37,6 +38,9 @@ export default function page() {
     init_date: '',
     final_date: ''
   });
+
+  const [date, setDate] = useState('');
+  
   const [saved, setSaved] = useState([{
     full_name: '',
     rows: 0,
@@ -51,13 +55,16 @@ export default function page() {
 
   //SETUP
 
-  if (cinemaID && !isExpired) {
+  if (id && cinemaID && !isExpired) {
     useEffect(() => {
 
       getCinema(cinemaID).then((response) => {
         setCinema(response.data)
       });
 
+      getSchedule(id).then((response)=>{
+        setDate(response.data.date)
+      })
 
     }, []);
   } else {
@@ -158,8 +165,9 @@ export default function page() {
         .catch((err) => {
           console.log(err)
         })
+      
+        redirect('/')
     }
-    setActiveStep(0);
   };
 
 
@@ -168,7 +176,7 @@ export default function page() {
 
   useEffect(() => {
     if (activeStep == steps.length) {
-      setQRMsg(' Nombre en tarjeta: ' + form.name + ' \n Numero en tarjeta: ' + form.number + '\n Asientos reservados: ' + saved.map((e) => e.full_name + '') + ' \n Fecha de pelicula:  \n Horario: 10 a.m \n ');
+      setQRMsg(' Nombre en tarjeta: ' + form.name + ' \n Numero en tarjeta: ' + form.number + '\n Asientos reservados: ' + saved.map((e) => e.full_name + '') + ' \n Fecha de pelicula: '+ dateFormat(date, 'dd/mm/yyyy') +' \n Horario: 10 a.m \n ');
     }
   }, [activeStep])
 
@@ -225,7 +233,7 @@ export default function page() {
                   <SeatsBill values={form} handleChange={handleChange} cinema={cinema} saved={saved} />
                   :
                   activeStep === 2 ?
-                    <ConfirmBill card={form} cinema={cinema} saved={saved} /> :
+                    <ConfirmBill card={form} cinema={cinema} saved={saved} date={date}/> :
                     <></>
             }
 

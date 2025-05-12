@@ -66,6 +66,7 @@ export default function UpdateCinemaModal(props: {
           redirect('/login');
         }
       })
+      .finally(props.reload())
     }
 
     setOpenAlert(true)

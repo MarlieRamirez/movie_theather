@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 import { deleteUser, getAllUsers } from '../../../network/lib/user';
-import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Alert, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { useJwt } from "react-jwt";
 import { Block } from '@mui/icons-material';
 import DeleteModal from '@/components/DeleteModal';
@@ -19,6 +19,10 @@ export default function page() {
   //ELIMINAR
   const [id, setUserID] = useState(0);
   const [open, setOpen] = useState(false);
+
+  //state delete alert
+  const [openAlert, setOpenAlert] = useState(false);
+  const [alert, setAlert] = useState('');
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -53,6 +57,13 @@ export default function page() {
       redirect('/login')
     } else {
       deleteUser(token, id).then((res) => {
+        setAlert(res.data.message + '-')
+        setOpenAlert(true)
+
+        setTimeout(() => {
+          setOpenAlert(false)
+        }, 3000)
+
         getAllUsers(token).then((response) => {
           setAllUsers(response.data)
           handleDeleteModal();
@@ -62,8 +73,7 @@ export default function page() {
   }
 
   return (
-    <div className='m-4 p-4'>
-      
+    <div className='p-4'>
 
       <div className='title d-flex title-action justify-content-between '>
         <div className='w-100 mt-3'>
@@ -74,6 +84,7 @@ export default function page() {
       <div className="divider"></div>
 
       <div className='d-flex justify-content-center '>
+
         {
           isLoading ?
             <LoadingComponent /> :
@@ -111,6 +122,14 @@ export default function page() {
               </TableContainer>
             </>
         }
+
+        <div className={'position-in' + (openAlert ? ' front' : alert == '' ? ' none' : ' out')}>
+          <Alert className='' severity="success" onClose={() => { setOpenAlert(false) }}>
+            {alert}
+          </Alert>
+        </div>
+
+        <DeleteModal handleClose={handleDeleteModal} open={open} onDelete={onDelete} />
       </div>
 
 
@@ -118,7 +137,7 @@ export default function page() {
 
 
 
-      <DeleteModal handleClose={handleDeleteModal} open={open} onDelete={onDelete} />
+      
     </div>
   )
 }

@@ -4,6 +4,10 @@ export function getFuture() {
   return axiosClient().get('/cinema');
 }
 
+export function getSchedule(id: string) {
+  return axiosClient().get('/schedule/' + id);
+}
+
 export function getSchedules(id: string) {
   return axiosClient().get('/schedule?id=' + id);
 }

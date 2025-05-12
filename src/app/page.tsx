@@ -56,7 +56,7 @@ export default function Home() {
                           component='img'
                           height='250'
                           src={e.img}
-                          title="green iguana" />
+                          title={e.movie} />
                         <CardContent>
                           <Typography variant="h5" component="div">
                             {e.movie}
