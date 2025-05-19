@@ -18,7 +18,7 @@ axiosClient().interceptors.response.use(
     function (error) {
         let res = error.response;
         if (res.status == 401) {
-            window.location.href = 'https://localhost:3000/login';
+            window.location.href = 'https://movietheather-production.up.railway.app/login';
         }
         console.error('Looks like there was a problem. Status Code: ' + res.status);
         return Promise.reject(error);
