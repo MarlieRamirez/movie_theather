@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const axiosClient = (token?:string) => axios.create({
     baseURL: 'https://moviesapi-production-e7b3.up.railway.app/',
+    withCredentials: false,
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
