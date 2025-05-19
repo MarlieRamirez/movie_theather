@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosClient = (token?:string) => axios.create({
-    baseURL: process.env.API || 'http://localhost:3001/',
+    baseURL: 'https://moviesapi-production-e7b3.up.railway.app/',
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
