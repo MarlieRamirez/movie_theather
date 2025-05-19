@@ -24,9 +24,9 @@ export default function page() {
   const id = searchParams.get('id');
 
   const [msg, setMsg] = useState('');
-  const [qr, setQR] = useState(<></>);
+  
   const [qrMsg, setQRMsg] = useState('');
-  const [dataUrl, setDataURL] = useState('');
+  
 
   const [cinema, setCinema] = useState({
     id: 0,
@@ -259,5 +259,5 @@ export default function page() {
       </Box>
     </>
 
-  )//16:00
+  )
 }

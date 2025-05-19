@@ -6,7 +6,7 @@ import { MovieCreationTwoTone } from "@mui/icons-material";
 
 import Link from 'next/link';
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
 import { redirect } from 'next/navigation';
 
@@ -107,7 +107,9 @@ export default function RootLayout({
           </Toolbar>
         </AppBar>
 
-        {children}
+        <Suspense>
+          {children}
+        </Suspense>
       </body>
     </html>
   );

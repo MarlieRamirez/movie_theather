@@ -29,3 +29,8 @@ type Seat = {
   id_user: number,
   id_schedule: number
 }
+
+type Card = { 
+  name: string, 
+  number: string
+}

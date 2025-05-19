@@ -2,7 +2,15 @@ import { TextField, Typography } from '@mui/material'
 import React from 'react'
 import dateFormat from "dateformat";
 
-export default function SeatsBill(props: { cinema: Cinema, saved: {}[], handleChange():Function, values:{} }) {
+export default function SeatsBill(props: { 
+  cinema: Cinema, 
+  saved: {}[], 
+  handleChange(value: any, id: string): void, 
+  values:{
+    name: string,
+    number: string,
+    code: string
+  } }) {
   
 
   return (

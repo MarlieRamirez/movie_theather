@@ -2,7 +2,7 @@ import { Typography } from '@mui/material'
 import React from 'react'
 import dateFormat from "dateformat";
 
-export default function ConfirmBill(props: {cinema:Cinema, saved: {}[], card: {}, date:string }) {
+export default function ConfirmBill(props: {cinema:Cinema, saved: Seat[], card: Card, date:string }) {
   return (
     <div className='d-grid '>
       <div className='text-center'>

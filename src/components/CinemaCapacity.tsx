@@ -4,13 +4,11 @@ import { IconButton, Typography } from '@mui/material';
 import { ChairRounded } from '@mui/icons-material';
 import { useSearchParams } from 'next/navigation';
 
-export default function CinemaCapacity(props: { handleSaved(): Function, saved: {}[], cinema: Cinema }) {
+export default function CinemaCapacity(props: { handleSaved(row: number, column:number): void, saved: Seat[], cinema: Cinema }) {
 
   const searchParams = useSearchParams();
   const cinemaID = searchParams.get('cinema');
   const id = searchParams.get('id');
-
-
 
   const [seats, setSeats] = useState([{
     full_name: '',
@@ -29,7 +27,7 @@ export default function CinemaCapacity(props: { handleSaved(): Function, saved: 
   }, []);
 
 
-  const rows: [React.JSX.Element] = [];
+  const rows: [React.JSX.Element] = [<></>];
 
   for (let i = 0; i < props.cinema.rows; i++) {
     const columns = []
@@ -37,7 +35,7 @@ export default function CinemaCapacity(props: { handleSaved(): Function, saved: 
     for (let c = 0; c < props.cinema.columns; c++) {
       const name = String.fromCharCode(65 + i) + '' + c;
       const index = seats.findIndex((e) => e.full_name == name)
-      const check = props.saved.findIndex((e) => e.full_name == name);
+      const check = props.saved.findIndex((e:Seat) => e.full_name == name);
 
       const color = index != -1 ? 'error' : check != -1 ? 'warning' : 'info'
 
