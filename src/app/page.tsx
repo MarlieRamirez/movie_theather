@@ -16,10 +16,10 @@ export default function Home() {
   //MODAL
   const [open, setOpen] = useState(false);
 
-  const handleModal = () =>{
+  const handleModal = () => {
     setOpen(!open)
   }
-  
+
   //DATA
   useEffect(() => {
     getFuture().then(response => {
@@ -67,7 +67,7 @@ export default function Home() {
 
                           <Divider></Divider>
                           <Typography variant="body1" >
-                            Del {dateFormat(e.init_date, 'dd/mm/yyyy')} al {dateFormat(e.final_date, 'dd/mm/yyyy')}
+                            Del {dateFormat(e.init_date, 'UTC:dd/mm/yyyy')} al {dateFormat(e.final_date, 'UTC:dd/mm/yyyy')}
                           </Typography>
                           <br />
 
@@ -96,9 +96,10 @@ export default function Home() {
               {
                 schedule.map((element: Schedule) => (
                   <Link className="mx my fit" key={element.id} href={{ pathname: '/reservation', query: { id: element.id, cinema: element.id_cinema } }} >
-                    <Button className="my button" variant="contained" color="secondary">{dateFormat(element.date, 'dd/mm/yyyy')}</Button>
+                    <Button className="my button" variant="contained" color="secondary">{dateFormat(element.date, 'UTC:dd/mm/yyyy')}</Button>
                   </Link>
                 ))
+
               }
             </div>
 

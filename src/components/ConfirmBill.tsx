@@ -22,7 +22,7 @@ export default function ConfirmBill(props: {cinema:Cinema, saved: Seat[], card: 
           <Typography className='p'><b>Nombre en Tarjeta: </b> {props.card.name}</Typography>
           <Typography className='p'><b>Número de Tarjeta: </b> {props.card.number}</Typography>
           <Typography className='p'><b>Asientos: </b> {props.saved.map(e => e.full_name + ' ')}</Typography>
-          <Typography className='p'><b>Fecha de pelicula: </b> {dateFormat(props.date, 'dd/mm/yyyy')}</Typography>
+          <Typography className='p'><b>Fecha de pelicula: </b> {dateFormat(props.date, 'UTC:dd/mm/yyyy')}</Typography>
           <Typography className='p'><b>Horario: </b> 10 a.m</Typography>
         </div>
 

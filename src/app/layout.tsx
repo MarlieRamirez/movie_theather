@@ -9,6 +9,7 @@ import Head from 'next/head';
 import { Suspense, useEffect, useState } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
 import { redirect } from 'next/navigation';
+import LoadingComponent from "@/components/LoadingComponent";
 
 
 const geistSans = Geist({
@@ -107,7 +108,7 @@ export default function RootLayout({
           </Toolbar>
         </AppBar>
 
-        <Suspense>
+        <Suspense fallback={<LoadingComponent />}>
           {children}
         </Suspense>
       </body>

@@ -176,7 +176,7 @@ export default function page() {
 
   useEffect(() => {
     if (activeStep == steps.length) {
-      setQRMsg(' Nombre en tarjeta: ' + form.name + ' \n Numero en tarjeta: ' + form.number + '\n Asientos reservados: ' + saved.map((e) => e.full_name + '') + ' \n Fecha de pelicula: '+ dateFormat(date, 'dd/mm/yyyy') +' \n Horario: 10 a.m \n ');
+      setQRMsg(' Nombre en tarjeta: ' + form.name + ' \n Numero en tarjeta: ' + form.number + '\n Asientos reservados: ' + saved.map((e) => e.full_name + '') + ' \n Fecha de pelicula: '+ dateFormat(date, 'UTC:dd/mm/yyyy') +' \n Horario: 10 a.m \n ');
     }
   }, [activeStep])
 

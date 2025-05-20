@@ -177,7 +177,7 @@ export default function page() {
                         <TableCell>{e.name}</TableCell>
                         <TableCell>{e.movie}</TableCell>
                         <TableCell>{e.rows} x {e.columns}</TableCell>
-                        <TableCell>Del {dateFormat(e.init_date, 'dd/mm/yyyy')} al {dateFormat(e.final_date, 'dd/mm/yyyy')}</TableCell>
+                        <TableCell>Del {dateFormat(e.init_date, 'UTC:dd/mm/yyyy')} al {dateFormat(e.final_date, 'UTC:dd/mm/yyyy')}</TableCell>
                         <TableCell>
 
                           {
