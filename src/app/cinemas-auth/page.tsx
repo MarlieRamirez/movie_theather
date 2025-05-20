@@ -43,6 +43,7 @@ export default function page() {
   //state delete alert
   const [openAlert, setOpenAlert] = useState(false);
   const [alert, setAlert] = useState('');
+  const [code, setCode] = useState('200');
 
   const handleClickOpen = (edit: string, first_data: any, second_data: any, id: number) => {
     setEditable(edit);
@@ -85,6 +86,16 @@ export default function page() {
     setOpen(false);
   };
 
+  const handleAlert = (message: string, code: string) => {
+    setAlert(message + '-')
+    setCode(code.toString())
+
+    setOpenAlert(true)
+
+    setTimeout(() => {
+      setOpenAlert(false)
+    }, 3000)
+  }
 
   const handleDeleteModal = (id?: number) => {
     setId(id ? id : 0);
@@ -104,16 +115,14 @@ export default function page() {
       handleDeleteModal();
 
       deleteCinema(token, id).then((res) => {
-        setAlert(res.data.message + '-')
-        setOpenAlert(true)
-
-        setTimeout(() => {
-          setOpenAlert(false)
-        }, 3000)
+        handleAlert(res.data.message, res.status.toString())
 
         getAdminCinemas(token).then((response) => {
           setFutureCinema(response.data)
         });
+      }).catch((error) => {
+        
+        handleAlert(error.response.data.message , error.status.toString())
       })
 
     }
@@ -150,11 +159,11 @@ export default function page() {
         <Button className='outline' color='info' variant='contained' onClick={handleCreate}> <Add className='m-1' /> Nueva Sala</Button>
       </div>
       <div className="divider"></div>
-      
+
       <div className='d-flex justify-content-center '>
         {
           isLoading ?
-            <LoadingComponent/>
+            <LoadingComponent />
             :
             <TableContainer component={Paper} className='w-75 table'>
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -181,8 +190,8 @@ export default function page() {
                         <TableCell>
 
                           {
-                            new Date(e.final_date) > new Date() ? 
-                            
+                            new Date(e.final_date) > new Date() ?
+
                               <>
 
                                 <IconButton title='Editar pelicula' color='warning' className='border-warning h-warning' onClick={() => handleClickOpen('movie', e.movie, e.img, e.id)} >
@@ -218,7 +227,7 @@ export default function page() {
         <DeleteModal handleClose={handleDeleteModal} open={openDelete} onDelete={onDelete} />
 
         <div className={'position-in' + (openAlert ? ' front' : alert == '' ? ' none' : ' out')}>
-          <Alert className='' severity="success" onClose={() => { setOpenAlert(false) }}>
+          <Alert className='' severity={code == '200' ? "success" : 'error'} onClose={() => { setOpenAlert(false) }}>
             {alert}
           </Alert>
         </div>
