@@ -39,7 +39,7 @@ export default function SeatsBill(props: {
             <TextField onChange={(e) => props.handleChange(e.target.value, e.target.id)} value={props.values.code} className='w-100' id="code" type='password' label="Codigo de seguridad" variant="outlined" />
           </div>
           {/* 1955 */}
-          <Typography>Fecha de facturación: {dateFormat(new Date(), 'UTC:dd/mm/yyyy')}</Typography>
+          <Typography>Fecha de facturación: {dateFormat(new Date(), 'dd/mm/yyyy')}</Typography>
         </form>
       </div>
     </div>
