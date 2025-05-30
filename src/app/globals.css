@@ -43,22 +43,23 @@ a {
   }
 }
 
-.divider{
+.divider {
   border: 1px solid;
   border-color: #ffffff;
   margin-bottom: 30px;
 }
 
-.none{
+.none {
   display: none;
 }
 
-.out{
+.out {
   animation-name: out;
   animation-duration: 1s;
   animation-fill-mode: forwards
 }
-.position-in{
+
+.position-in {
   z-index: 10;
   position: fixed;
   top: 30px;
@@ -66,25 +67,36 @@ a {
   height: min-content;
 }
 
-.front{
+.front {
   display: block;
   animation-name: example;
   animation-duration: 1s;
 }
 
 @keyframes example {
-  from {top: 50px;}
-  to {top: 30px;}
+  from {
+    top: 50px;
+  }
+
+  to {
+    top: 30px;
+  }
 }
 
 @keyframes out {
-  from {opacity: 90%;}
-  to {opacity: 0%; display: none;}
+  from {
+    opacity: 90%;
+  }
+
+  to {
+    opacity: 0%;
+    display: none;
+  }
 }
 
-.login{
+.login {
   background-color: #ededed;
-  color:#0a0a0a;
+  color: #0a0a0a;
   padding: 3pc;
   margin-top: 20px;
   border: 3px solid #2f2030;
@@ -94,32 +106,32 @@ a {
   margin-bottom: 20px;
 }
 
-.movie-cards{
+.movie-cards {
   margin: 50px;
-  display: grid ;
+  display: grid;
   justify-content: space-evenly;
 }
 
-.text-field{
+.text-field {
   padding-bottom: 2vh;
   padding-top: 2vh;
 }
 
-.row{
+.row {
   margin-top: 30px;
   margin-bottom: 30px;
 }
 
 
-.title{
+.title {
   background: #020024;
-  background: linear-gradient(198deg,rgba(2, 0, 36, 1) 0%, rgba(13, 7, 97, 1) 100%);
+  background: linear-gradient(198deg, rgba(2, 0, 36, 1) 0%, rgba(13, 7, 97, 1) 100%);
   font-size: larger;
   margin: 0 !important;
   padding: 2pc;
 }
 
-.light{
+.light {
   background-color: #ededed;
   padding: 2pc;
   margin: auto;
@@ -128,147 +140,157 @@ a {
   border-radius: 50px;
 }
 
-.title-light{
+.title-light {
   margin-bottom: 2pc;
   text-align: center;
 }
 
-.color-black{
+.color-black {
   color: #0a0a0a;
 }
 
-.img-center{
+.img-center {
   margin: auto;
 }
 
-.fit{
+.fit {
   display: inline-block;
   height: fit-content;
 }
-.h3{
+
+.h3 {
   text-transform: uppercase;
 }
 
-.img-plain{
+.img-plain {
   border-radius: 50px;
   margin-top: 1pc;
   margin-bottom: 1pc;
 }
 
-.stepper{
+.stepper {
   margin-top: 3pc;
   margin-bottom: 3pc;
 }
 
-.card:hover{
+.card:hover {
   box-shadow: 0px 30px 10px #026153;
 }
 
-.d-flex{
+.d-flex {
   display: flex;
 }
 
-.d-grid{
+.d-grid {
   display: grid;
-  grid-template-columns: auto auto ;
+  grid-template-columns: auto auto;
 }
 
 
-.justify-content-center{
+.justify-content-center {
   justify-content: center;
 }
 
-.title-action{
+.title-action {
   align-items: center;
   margin: 30px;
 }
 
-.content-danger{
+.content-danger {
   align-items: center;
   color: #d32f2f;
 }
 
-.text-danger{
+.text-danger {
   color: #d32f2f;
   margin-left: 10px;
   margin-top: 3px;
 }
 
-.m-4{
+.m-4 {
   padding-top: 1pc;
   margin-bottom: 4pc;
 }
 
-.p{
+.p {
   padding-bottom: 2pc;
 }
 
-.mx{
+.mx {
   margin-left: 1vw;
   margin-right: 1vw;
 }
 
-.my{
+.my {
   margin-top: 1vh;
   margin-bottom: 2vh;
 }
 
-.text-center{
+.text-center {
   text-align: center;
 }
-.w-100{
+
+.w-100 {
   width: 100%;
 }
-.h-100{
+
+.h-100 {
   height: 100%;
 }
 
-.w-75{
+.w-75 {
   width: 75% !important;
 }
 
-.border-danger{
+.border-danger {
   border: 1px solid #d32f2f !important;
   margin-left: 5px !important;
-  margin-right:5px!important ;
+  margin-right: 5px !important;
 }
 
-.border-warning{
+.border-warning {
   border: 1px solid #ed6c02 !important;
   margin-left: 5px !important;
-  margin-right:5px!important ;
+  margin-right: 5px !important;
 }
 
-.h-warning:hover{
+.h-warning:hover {
   background-color: #ffd2ad !important;
 }
 
-.h-danger:hover{
+.h-danger:hover {
   background-color: #ffd0d0 !important;
 }
 
-.table{
+.table {
   margin-bottom: 30px;
 }
 
-.report{
+.report {
   background-color: #026153;
   justify-content: center;
   padding: 10px;
   margin: 0;
 }
-.grow{
+
+.grow {
   flex: 1;
   align-self: stretch;
 }
 
-.normal{
+.normal {
   margin-left: 12vw;
   margin-right: 12vw;
 }
 
-.perdida{
-   background-color: #4f0808;  
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.perdida {
+  background-color: #4f0808;
   padding: 10px;
   margin: 0;
 }
