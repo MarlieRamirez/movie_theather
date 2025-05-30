@@ -250,3 +250,25 @@ a {
 .table{
   margin-bottom: 30px;
 }
+
+.report{
+  background-color: #026153;
+  justify-content: center;
+  padding: 10px;
+  margin: 0;
+}
+.grow{
+  flex: 1;
+  align-self: stretch;
+}
+
+.normal{
+  margin-left: 12vw;
+  margin-right: 12vw;
+}
+
+.perdida{
+   background-color: #4f0808;  
+  padding: 10px;
+  margin: 0;
+}

@@ -24,6 +24,10 @@ export function getAdminCinemas(token:string) {
   return axiosClient(token).get('/admin/cinema/');
 }
 
+export function getReportSeats(token:string) {
+  return axiosClient(token).get('/admin/report/');
+}
+
 export function newCinema(formValues: {name: string, rows: number, columns:number, movie: string, img_url: string}, token:string) {
   if (token != '') {
     return axiosClient(token).post('/admin/cinema/', {

@@ -50,6 +50,12 @@ export default function RootLayout({
                 <Button color="inherit">Usuarios</Button>
               </Link>
             </div>
+
+            <div>
+              <Link key={'menu-report'} href='/report'>
+                <Button color="inherit">Reporte</Button>
+              </Link>
+            </div>
             <Button color="inherit" onClick={logout}>Logout</Button>
           </>
         )

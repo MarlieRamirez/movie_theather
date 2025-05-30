@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosClient = (token?:string) => axios.create({
-    baseURL: 'https://moviesapi-production-e7b3.up.railway.app/',
+    baseURL: 'http://localhost:3001/',
     withCredentials: false,
     headers: {
         'Accept': 'application/json',
